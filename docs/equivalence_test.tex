@@ -1,0 +1,48 @@
+\section{同等性検定}
+
+\subsection{どのような検定か}
+
+同等性検定は、2つの群に同等とみなせる程度の差しかないことを示すための検定である。2群の母平均$\mu_{1}, \mu_{2}$について、同等とみなせる差を$\triangle_{l}, \triangle_{u}\ (\triangle_{l} < \triangle_{u})$とするとき、帰無仮説$H_{0}$と対立仮説$H_{1}$は
+\begin{gather}
+    H_{0}: \mu_{1} - \mu_{2} < \triangle_{l} \lor \mu_{1} - \mu_{2} > \triangle_{u} \\
+    H_{1}: \triangle_{l} \le \mu_{1} - \mu_{2} \le \triangle_{u}
+\end{gather}
+とする。帰無仮説を棄却するとき、同等とみなせる程度しか差がなかったと言える。
+
+Welchのt検定を用いることができ、検定統計量は
+\begin{equation}
+    T_{l} = \frac{\bar{X}_{1} - \bar{X}_{2} - \triangle_{l}}{\sqrt{\frac{s_{1}^{2}}{n_{1}} + \frac{s_{2}^{2}}{n_{2}}}},\ T_{r} = \frac{\bar{X}_{1} - \bar{X}_{2} - \triangle_{u}}{\sqrt{\frac{s_{1}^{2}}{n_{1}} + \frac{s_{2}^{2}}{n_{2}}}}
+\end{equation}
+である。$\mu_{1} - \mu_{2} < \triangle_{l}$に対する棄却域は$T > t_{\alpha}(\nu)$、$\mu_{1} - \mu_{2} > \triangle_{u}$に対する棄却域は$T < -t_{\alpha}(\nu)$である。
+
+\subsection{サンプルサイズの設計}
+
+Welchのt検定と同様に求めることができる。まず、帰無仮説が$\mu_{1} - \mu_{2} < \triangle_{l}$である場合を導出する。
+\begin{align}
+    1 - \beta & = P(T > z_{\alpha})                                                                                                                                                                                                                                \\
+              & = P\left(\frac{\bar{X}_{1} - \bar{X}_{2} - \triangle_{l}}{\sqrt{\frac{s_{1}^{2}}{n_{1}} + \frac{s_{2}^{2}}{n_{2}}}} > z_{\alpha}\right)                                                                                                            \\
+              & = P\left(\frac{\bar{X}_{1} - \bar{X}_{2} - (\mu_{1} - \mu_{2})}{\sqrt{\frac{s_{1}^{2}}{n_{1}} + \frac{s_{2}^{2}}{n_{2}}}} > z_{\alpha} - \frac{\mu_{1} - \mu_{2} - \triangle_{l}}{\sqrt{\frac{s_{1}^{2}}{n_{1}} + \frac{s_{2}^{2}}{n_{2}}}}\right)
+\end{align}
+これより、
+\begin{equation}
+    -z_{\beta} = z_{\alpha} - \frac{\mu_{1} - \mu_{2} - \triangle_{l}}{\sqrt{\frac{s_{1}^{2}}{n_{1}} + \frac{s_{2}^{2}}{n_{2}}}}
+\end{equation}
+となるため、$n_{1}$について解くことでサンプルサイズの計算式を得る。
+\begin{equation}
+    n_{1} = \frac{(z_{\alpha/2} + z_{\beta})^{2} \left(s_{1}^{2} + \frac{s_{2}^{2}}{r}\right)}{(\mu_{1} - \mu_{2} - \triangle_{l})^{2}}
+\end{equation}
+
+帰無仮説が$\mu_{1} - \mu_{2} > \triangle_{u}$である場合も同様に導出できる。
+\begin{align}
+    1 - \beta & = P(T < -z_{\alpha})                                                                                                                                                                                                                                \\
+              & = P\left(\frac{\bar{X}_{1} - \bar{X}_{2} - \triangle_{u}}{\sqrt{\frac{s_{1}^{2}}{n_{1}} + \frac{s_{2}^{2}}{n_{2}}}} < -z_{\alpha}\right)                                                                                                            \\
+              & = P\left(\frac{\bar{X}_{1} - \bar{X}_{2} - (\mu_{1} - \mu_{2})}{\sqrt{\frac{s_{1}^{2}}{n_{1}} + \frac{s_{2}^{2}}{n_{2}}}} < -z_{\alpha} - \frac{\mu_{1} - \mu_{2} - \triangle_{u}}{\sqrt{\frac{s_{1}^{2}}{n_{1}} + \frac{s_{2}^{2}}{n_{2}}}}\right)
+\end{align}
+これより、
+\begin{equation}
+    z_{\beta} = -z_{\alpha} - \frac{\mu_{1} - \mu_{2} - \triangle_{u}}{\sqrt{\frac{s_{1}^{2}}{n_{1}} + \frac{s_{2}^{2}}{n_{2}}}}
+\end{equation}
+となるため、$n_{1}$について解くことでサンプルサイズの計算式を得る。
+\begin{equation}
+    n_{1} = \frac{(-z_{\alpha/2} - z_{\beta})^{2} \left(s_{1}^{2} + \frac{s_{2}^{2}}{r}\right)}{(\mu_{1} - \mu_{2} - \triangle_{u})^{2}} = \frac{(z_{\alpha/2} + z_{\beta})^{2} \left(s_{1}^{2} + \frac{s_{2}^{2}}{r}\right)}{(\mu_{1} - \mu_{2} - \triangle_{u})^{2}}
+\end{equation}

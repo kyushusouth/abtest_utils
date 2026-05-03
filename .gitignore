@@ -1,0 +1,23 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# R
+.Rhistory
+.RData
+.Rproj.user/
+
+docs/latex-output/*.aux
+docs/latex-output/*.dvi
+docs/latex-output/*.fdb_latexmk
+docs/latex-output/*.fls
+docs/latex-output/*.log
+docs/latex-output/*.synctex.gz
+docs/latex-output/*.toc

@@ -1,0 +1,182 @@
+\section{比率の差の検定}
+
+\subsection{どのような検定か}
+
+比率の差の検定は、ABテストにおいて、A群とB群の間でCVRに有意な差があるかを判定する場合に用いることができる。二項分布に従う確率変数$X_{1} \sim B(n_{1}, p_{1}),\ X_{2} \sim B(n_{2}, p_{2})$における母比率$p_{1}$と$p_{2}$に違いがあるかを判断するための検定である。ここで、$n_{1}, n_{2}$は各群のサンプルサイズであり、$n_{2} = rn_{1}$とする。また、
+\begin{equation}
+    \quad \hat{p}_{1} = \frac{X_{1}}{n_{1}}, \quad \hat{p}_{2} = \frac{X_{2}}{n_{2}}
+\end{equation}
+とする。いま、$n_{1}, n_{2}$は十分大きく、中心極限定理より
+\begin{equation}
+    \hat{p}_{1} \sim N\left(p_{1}, \frac{p_{1}(1 - p_{1})}{n_{1}}\right), \quad \hat{p}_{2} \sim N\left(p_{2}, \frac{p_{2}(1 - p_{2})}{n_{2}}\right)
+\end{equation}
+が成り立つとする。これは、$X_{k}\ (k = 1, 2)$が$B(1, p_{k})$に従う確率変数の和であることによる。このとき、$\hat{\delta} = \hat{p}_{1} - \hat{p}_{2}$は正規分布の再生性より
+\begin{equation}
+    \hat{\delta} \sim N\left(p_{1} - p_{2},\ \frac{p_{1}(1 - p_{1})}{n_{1}} + \frac{p_{2}(1 - p_{2})}{n_{2}}\right)
+\end{equation}
+となる。特に、帰無仮説$H_{0}: p_{1} = p_{2} (= p)$が成り立つ時、
+\begin{equation}
+    \hat{\delta} \sim N\left(0,\ p(1 - p)\left(\frac{1}{n_{1}} + \frac{1}{n_{2}}\right)\right)
+\end{equation}
+である。$\hat{p} = (X_{1} + X_{2}) / (n_{1} + n_{2})$として、
+\begin{equation}
+    Z = \frac{\hat{\delta}}{\sqrt{\hat{p}(1 - \hat{p})\left(\frac{1}{n_{1}} + \frac{1}{n_{2}}\right)}}
+\end{equation}
+が検定統計量である。対立仮説に対する棄却域とp値の計算方法は表\ref{sec1:tab:rejection_region}の通りである。$z$は正規分布に従う確率変数であり、$z_{\alpha}$は上側100$\alpha$\%を満たす点である。
+
+\begin{table*}[h]
+    \centering
+    \caption{比率の差の検定における対立仮説と棄却域、p値の計算方法}
+    \label{sec1:tab:rejection_region}
+    \begin{center}
+        \renewcommand{\arraystretch}{0.9} % 行の高さ調整
+        \setlength{\tabcolsep}{8pt}      % 列の幅調整
+        \scalebox{1.0}{
+            \begin{tabular}{|c|c|c|}
+                \hline
+                対立仮説               & 棄却域                  & p値の計算方法       \\
+                \hline
+                $p_{1} \neq p_{2}$ & $|Z| > z_{\alpha/2}$ & $2P(z > |Z|)$ \\
+                $p_{1} > p_{2}$    & $Z > z_{\alpha}$     & $P(z > Z)$    \\
+                $p_{1} < p_{2}$    & $Z < -z_{\alpha}$    & $P(z < Z)$    \\
+                \hline
+            \end{tabular}
+        }
+    \end{center}
+\end{table*}
+
+\subsection{サンプルサイズの設計方法}
+
+\subsubsection{両側検定の場合}
+対立仮説を$p_{1} \neq p_{2}$としたときのサンプルサイズ設計に用いる計算式を導出する。対立仮説が成り立つとした時、
+\begin{equation}
+    1 - \beta = P(|Z| > z_{\alpha/2}) = P(Z > z_{\alpha/2}) + P(Z < -z_{\alpha/2}) \label{sec1:eq:stat_power}
+\end{equation}
+である。ここで、$p_{1} > p_{2}$とする。この時、式\eqref{sec1:eq:stat_power}の第二項は十分小さいとして無視する。すると、以下のように整理できる。
+\begin{align}
+    1 - \beta & = P(Z > z_{\alpha/2}) \label{sec1:eq:stat_power_simplified}                                                                                                                                                                                                                                                            \\
+              & = P\left(\frac{\hat{\delta}}{\sqrt{p(1 - p)\left(\frac{1}{n_{1}} + \frac{1}{n_{2}}\right)}} > z_{\alpha/2}\right)                                                                                                                                                                                                      \\
+              & = P\left(\frac{\hat{\delta} - (p_{1} - p_{2})}{\sqrt{\frac{p_{1}(1 - p_{1})}{n_{1}} + \frac{p_{2}(1 - p_{2})}{n_{2}}}} > \frac{z_{\alpha/2}\sqrt{\hat{p}(1 - \hat{p})\left(\frac{1}{n_{1}} + \frac{1}{n_{2}}\right)} - (p_{1} - p_{2})}{\sqrt{\frac{p_{1}(1 - p_{1})}{n_{1}} + \frac{p_{2}(1 - p_{2})}{n_{2}}}}\right) \\
+\end{align}
+対立仮説が真である時に
+\begin{equation}
+    \frac{\hat{\delta} - (p_{1} - p_{2})}{\sqrt{\frac{p_{1}(1 - p_{1})}{n_{1}} + \frac{p_{2}(1 - p_{2})}{n_{2}}}} \sim N(0, 1)
+\end{equation}
+であるから、
+\begin{equation}
+    -z_{\beta} = \frac{z_{\alpha/2}\sqrt{\hat{p}(1 - \hat{p})\left(\frac{1}{n_{1}} + \frac{1}{n_{2}}\right)} - (p_{1} - p_{2})}{\sqrt{\frac{p_{1}(1 - p_{1})}{n_{1}} + \frac{p_{2}(1 - p_{2})}{n_{2}}}}
+\end{equation}
+が成り立つ。ここで、$n_{2} = rn_{1}$を使って$n_{1}$について解くと、
+\begin{equation}
+    n_{1} = \frac{\left(z_{\alpha/2}\sqrt{\hat{p}(1 - \hat{p})(r + 1)} + z_{\beta}\sqrt{rp_{1}(1 - p_{1}) + p_{2}(1 - p_{2})}\right)^{2}}{(p_{1} - p_{2})^{2}r}
+\end{equation}
+を得る。$\hat{p} = (X_{1} + X_{2})/(n_{1} + n_{2})$であったが、以下のように整理すれば$n_{1}, n_{2}$に依存せず計算可能である。
+\begin{align}
+    \hat{p} & = \frac{X_{1} + X_{2}}{n_{1} + n_{2}} = \frac{n_{1}\hat{p_{1}} + n_{2}\hat{p}_{2}}{n_{1} + n_{2}} = \frac{n_{1}\hat{p_{1}} + rn_{1}\hat{p}_{2}}{n_{1} + rn_{1}} = \frac{\hat{p}_{1} + r\hat{p}_{2}}{1 + r} \\
+\end{align}
+
+上記の導出は$p_{1} > p_{2}$を仮定したが、$p_{1} < p_{2}$を仮定した場合は
+\begin{equation}
+    1 - \beta = P(Z < -z_{\alpha/2}) = P(Z > z_{\alpha/2})
+\end{equation}
+となるため、同じ計算式で良い。
+
+\subsubsection{片側検定の場合}
+対立仮説を$p_{1} > p_{2}$とした場合のサンプルサイズ設計に用いる計算式は、両側検定における計算式の$z_{\alpha/2}$に$z_{\alpha}$を代入すれば良い。式\eqref{sec1:eq:stat_power_simplified}が変わるだけだからである。
+
+% \subsection{カイ二乗検定と比率の差の検定の関係}
+% 次に、表\ref{tab:crosstab}のような$2 \times 2$のクロス集計表に対して用いられるカイ二乗検定を考える。
+% \begin{table}[hbt]
+%     \centering
+%     \caption{観測データのクロス集計表}
+%     \label{tab:crosstab}
+%     \vspace{5pt}
+%     \begin{tabular}{|c|cc|c|}
+%         \hline
+%                         & $B_{1}$       & $B_{2}$       & 合計$T_{i \cdot}$ \\
+%         \hline
+%         $A_{1}$         & $x_{11}$      & $x_{12}$      & $T_{1 \cdot}$   \\
+%         $A_{2}$         & $x_{21}$      & $x_{22}$      & $T_{2 \cdot}$   \\
+%         \hline
+%         合計$T_{\cdot j}$ & $T_{\cdot 1}$ & $T_{\cdot 2}$ & $T$             \\
+%         \hline
+%     \end{tabular}
+% \end{table}
+% 確率を表\ref{tab:crosstab_prob}のようにおく。
+% \begin{table}[hbt]
+%     \centering
+%     \caption{一様性の検定のための確率のおき方}
+%     \label{tab:crosstab_prob}
+%     \vspace{5pt}
+%     \begin{tabular}{|c|cc|c|}
+%         \hline
+%                 & $B_{1}$  & $B_{2}$  & 合計 \\
+%         \hline
+%         $A_{1}$ & $p_{11}$ & $p_{12}$ & 1  \\
+%         $A_{2}$ & $p_{21}$ & $p_{22}$ & 1  \\
+%         \hline
+%     \end{tabular}
+% \end{table}
+% この確率を用いて、$A_{1}$群で効果がある確率を$A_{2}$群で効果がある確率が等しいという帰無仮説は$p_{11} = p_{21}$と表される。対立仮説は$p_{11} \neq p_{21}$とする。
+
+% 帰無仮説のもとで、$(A_{i}, B_{j})$の期待度数$t_{ij}$は
+% \begin{equation}
+%     t_{ij} = \frac{T_{\cdot j}}{T} T_{i \cdot}
+% \end{equation}
+% で求められる。全体における効果が出る割合$T_{\cdot j} / T$にi群の人数$T_{i \cdot}$をかけている。表\ref{tab:crosstab_expected_freq}に期待度数を示す。
+% \begin{table}[hbt]
+%     \centering
+%     \caption{期待度数}
+%     \label{tab:crosstab_expected_freq}
+%     \vspace{5pt}
+%     \begin{tabular}{|c|cc|c|}
+%         \hline
+%                         & $B_{1}$       & $B_{2}$       & 合計$T_{i \cdot}$ \\
+%         \hline
+%         $A_{1}$         & $t_{11}$      & $t_{12}$      & $T_{1 \cdot}$   \\
+%         $A_{2}$         & $t_{21}$      & $t_{22}$      & $T_{2 \cdot}$   \\
+%         \hline
+%         合計$T_{\cdot j}$ & $T_{\cdot 1}$ & $T_{\cdot 2}$ & $T$             \\
+%         \hline
+%     \end{tabular}
+% \end{table}
+
+% この時、
+% \begin{equation}
+%     \chi^{2} = \sum_{i = 1}^{2}\sum_{j = 1}^{2} \frac{(x_{ij} - t_{ij})^{2}}{t_{ij}}
+% \end{equation}
+% の確率分布は、帰無仮説のもとで自由度1のカイ二乗分布に近似できる。これより、$\chi^{2}$を検定統計量としたカイ二乗検定が可能である。カイ二乗分布の定義より、$Z^{2}$も自由度1のカイ二乗分布に従うことに注意する。ここで、$\chi^{2}_{\alpha}$をカイ二乗分布における上側$100\alpha$\%点とすると、
+% \begin{equation}
+%     P(\chi^{2} > \chi^{2}_{\alpha}(1)) = \alpha
+% \end{equation}
+% かつ
+% \begin{equation}
+%     P(|Z| > z_{\alpha / 2}) = P(Z^{2} > z_{\alpha / 2}^{2}) = P(\chi^{2} > z_{\alpha / 2}^{2}) = \alpha
+% \end{equation}
+% であるから、
+% \begin{equation}
+%     P(\chi^{2} > \chi^{2}_{\alpha}(1)) = P(\chi^{2} > z_{\alpha / 2}^{2})
+% \end{equation}
+% よって、$\chi_{\alpha}(1) = z_{\alpha / 2}^{2}$が成り立つ。
+
+% ここで、比率の差の検定における検定統計量$Z$は
+% \begin{equation}
+%     Z = \frac{\hat{\delta}}{\sqrt{(1 + r)p(1 - p) / rn_{1}}} \sim N(0, 1)
+% \end{equation}
+% であった（実際は$p$に$\overline{p}$を代入する）。また、$2 \times 2$のクロス集計表に対するカイ二乗検定は、比率の差の検定として見ることもできる。なぜなら、互いに独立な二項分布に従う確率変数$X_{11}, X_{21}$
+% \begin{equation}
+%     X_{11} \sim B(T_{1 \cdot}, p_{11}), \quad X_{21} \sim B(T_{2 \cdot}, p_{21})
+% \end{equation}
+% における$p_{11}$の$p_{21}$の同等性を扱う検定問題だからである。
+
+% 今、$p_{11}$と$p_{21}$の間で検出したい差を$\epsilon$とし、この検出したい差に対して有意水準$\alpha$で検出力$1 - \beta$を持つ比率の差の検定が行えるサンプルサイズを、\eqref{eq:proportion_sample_size}で計算したとする。この時、帰無仮説のもとでは
+% \begin{equation}
+%     P(\chi^{2} > \chi^{2}_{\alpha}(1)) = \alpha
+% \end{equation}
+% であり、対立仮説のもとでは
+% \begin{equation}
+%     1 - \beta = P(|Z| > z_{\alpha / 2}) = P(Z^{2} > z_{\alpha / 2}^{2}) = P(\chi^{2} > z_{\alpha / 2}^{2}) = P(\chi^{2} > \chi_{\alpha}(1))
+% \end{equation}
+% である。ここでは、比率の差の検定の検出力が$1 - \beta$となるサンプルサイズであること、$Z^{2} = \chi^{2}$であること、$\chi_{\alpha}(1) = z_{\alpha / 2}^{2}$であることを用いた。
+
+% これより、比率の差の検定のために算出されたサンプルサイズを確保すれば、カイ二乗検定も有意水準$\alpha$で検出力$1 - \beta$を持った検定となることがわかる。

@@ -1,0 +1,95 @@
+\documentclass[12pt]{jarticle}
+\usepackage[utf8]{inputenc}
+\usepackage[top=30truemm, bottom=30truemm, left=20truemm, right=20truemm]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{siunitx}
+\usepackage{bm}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage[dvipdfmx]{color}
+\usepackage[subrefformat=parens]{subcaption}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{tocloft}
+\usepackage{enumerate}
+\usepackage{url}
+\usepackage{multirow}
+\usepackage{caption}
+\usepackage{enumitem}
+\usepackage{makecell}
+\usepackage{array}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{amsthm}
+\usepackage{physics}
+\usepackage{mathrsfs}
+\usepackage{bbm}
+
+\numberwithin{equation}{section}    % 数式番号にセクション番号をつける
+\numberwithin{figure}{section}      % 図番号にセクション
+\numberwithin{table}{section}      % 図番号にセクション
+
+% \renewcommand{\figurename}{Fig.}    % 図 -> Fig.
+% \renewcommand{\tablename}{Table }   % 表 -> Table
+
+\renewcommand{\baselinestretch}{1.1}
+
+\theoremstyle{definition}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{lemma}{Lemma}
+\newtheorem{definition}{Definition}
+
+\newlength{\figcaptionskip}
+\setlength{\figcaptionskip}{5pt} % 図のキャプション間隔
+\newlength{\tabcaptionskip}
+\setlength{\tabcaptionskip}{-5pt} % 表のキャプション間隔
+\captionsetup[figure]{skip=\figcaptionskip}
+\captionsetup[table]{skip=\tabcaptionskip}
+
+\setlist[enumerate]{topsep=5pt, partopsep=5pt, itemsep=0pt, parsep=0pt}
+\setlength{\topsep}{5pt}
+\setlength{\partopsep}{5pt}
+
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+\begin{document}
+
+\tableofcontents
+\newpage
+
+\input{proportion_test.tex}
+
+\input{t_test.tex}
+
+\input{poisson_test.tex}
+
+\input{equivalence_test.tex}
+
+\input{non_inferiority_test.tex}
+
+\input{mann_whitney_u_test.tex}
+
+\input{multiple_test.tex}
+
+% \input{other.tex}
+
+\renewcommand{\refname}{参考文献}
+
+\begin{thebibliography}{99}
+    \bibitem{tokyo} 東京大学教養学部統計学教室（編）『統計学入門 基礎統計学I』東京大学出版会、1991年。 \url{https://www.amazon.co.jp/dp/4130420658}
+    \bibitem{kubokawa2017} 久保川達也『現代数理統計学の基礎』共立出版、2017年。\url{https://www.amazon.co.jp/dp/4320111664}
+    \bibitem{takemura2020} 竹村彰通（2020）『新装改訂版 現代数理統計学』学術図書出版社.
+    \bibitem{jss2023} 日本統計学会 編（2023）『増訂版 日本統計学会公式認定 統計検定1級対応 統計学』東京図書.
+    \bibitem{shimizu2019} 清水泰隆『統計学への確率論、その先へ―ゼロからの測度論的理解と漸近理論への架け橋』内田老鶴圃、2019年。\url{https://www.amazon.co.jp/dp/B09HQGPM6L}
+    \bibitem{nagata2003} 永田靖『サンプルサイズの決め方 (統計ライブラリー)』朝倉書店、2003年。\url{https://www.amazon.co.jp/dp/4254126654}
+    \bibitem{kohavi2021} Ron Kohavi, Diane Tang, Ya Xu 著, 大杉直也 訳（2021）『A/Bテスト実践ガイド ――真のデータドリブンへ至る信頼できる実験とは』アスキー・ドワンゴ.
+    \bibitem{lakens2017} Lakens, D. "Equivalence Tests: A Practical Primer for t Tests, Correlations, and Meta-Analyses." \textit{Social Psychological and Personality Science} 8.4 (2017): 355-362. \url{https://pmc.ncbi.nlm.nih.gov/articles/PMC5502906/pdf/10.1177_1948550617697177.pdf}
+    \bibitem{ahn2012} Ahn, S., \& Park, S. H. "Understanding equivalence and noninferiority testing." \textit{Korean Journal of Pediatrics} 55.11 (2012): 403-405. \url{https://pmc.ncbi.nlm.nih.gov/articles/PMC3510268/pdf/kjped-55-403.pdf}
+    \bibitem{noether1987} Gottfried E. Noether (1987) "Sample Size Determination for Some Common Nonparametric Tests", Journal of the American Statistical Association, 82(398), 645-647.
+    \bibitem{emuyn_equivalence} emuyn. "同等性検定." \url{https://www.emuyn.net/stats/lecture/%E5%90%8C%E7%AD%89%E6%80%A7%E6%A4%9C%E5%AE%9A}
+    \bibitem{robinson_slutsky} Robinson, T. S. "10 Econometric Theorems: Slutsky's Theorem." \url{https://bookdown.org/ts_robinson1994/10EconometricTheorems/slutsky.html}
+\end{thebibliography}
+
+\end{document}

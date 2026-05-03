@@ -1,0 +1,30 @@
+\section{多重比較の補正}
+
+\subsection{Holm法}
+
+\subsubsection{検定の方法}
+
+多重比較における帰無仮説を$H_{0, i}\ (i = 1, \ldots, n)$とする。また、各検定におけるp値は$p_{i}$で、単調増加するように並んでいるものとする。$i = 1$から検定を開始する。$p_{i} < \frac{\alpha}{n + 1 - i}$ならば$H_{0, i}$を棄却し、$i + 1$に進める。$H_{0, i}$を棄却できない場合は検定を終了する。
+
+\subsubsection{FWERを有意水準以下に抑えられることの証明}
+
+標本空間$\Omega$を1回の実験で得られるデータ全体の集合（あるユーザーが何回CVしたなど）として、確率空間$(\Omega, \mathcal{F}, P)$を定義する。$I = \{i | H_{0, i}は真である\}$とし、$m = |I|$とする。
+
+$i^{\ast} = \argmin_{i \in I} p_{i}$とする。$i^{\ast} \le n - m + 1$より$\frac{1}{n + 1 - i^{\ast}} \le \frac{1}{m}$を得る。FWERは、少なくとも1回帰無仮説が真である場合に誤って棄却する確率である。Holm法の検定方法より、少なくとも1回帰無仮説が真である場合に棄却されるためには、$H_{0, i^{\ast}}$が棄却される必要がある。$H_{0, i^{\ast}}$が棄却されなかった場合そこで検定が終了するため、他の帰無仮説も棄却されないからである。$H_{0, i^{\ast}}$が棄却される条件は$p_{i^{\ast}} < \frac{\alpha}{n + 1 - i^{\ast}} \le \frac{\alpha}{m}$である。これより、
+\begin{equation}
+    \text{FWER} \le P\left(\min_{i \in I} p_{i} \le \frac{\alpha}{m}\right)
+\end{equation}
+となる。さらに整理して、
+\begin{equation}
+    \text{FWER} \le P\left(\min_{i \in I} p_{i} \le \frac{\alpha}{m}\right) = P\left(\bigcup_{i \in I} \left\{p_{i} \le \frac{\alpha}{m}\right\}\right) \le \sum_{i \in I} P\left(\left\{p_{i} \le \frac{\alpha}{m}\right\}\right) \le m \frac{\alpha}{m} = \alpha
+\end{equation}
+となる。ここでは以下を用いた。
+\begin{enumerate}
+    \item 確率測度の劣加法性
+    \item 帰無仮説が真である場合にp値は一様分布するため、$P\left(\left\{p_{i} \le \frac{\alpha}{m}\right\}\right) \le \frac{\alpha}{m}$であること
+\end{enumerate}
+帰無仮説が真である時にp値が一様分布することは、確率積分変換から導出することができる。「数理統計学の基礎」の命題2.19を参考にした。
+
+\subsubsection{Bonferroni法に対する優位性}
+
+Bonferroni法は、全ての帰無仮説に対して有意水準を$\alpha/n$とする。Holm法よりも各検定における有意水準が小さく、検出力に課題がある。Holm法はFWERを有意水準$\alpha$以下に抑えつつ、Bonferroni法よりも高い検出力で検定が可能である。

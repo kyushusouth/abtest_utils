@@ -1,0 +1,24 @@
+\section{非劣性検定}
+
+\subsection{どのような検定か}
+
+非劣性検定は、ABテストにおいて現行バージョンを群1、新たなバージョンを群2とした時、群2が群1から劣化していないかを確かめるのに用いることができる。
+
+2群の母平均$\mu_{1}, \mu_{2}$について、許容できる差を$\triangle_{l}$とするとき、帰無仮説$H_{0}$と対立仮説$H_{1}$は
+\begin{gather}
+    H_{0}: \mu_{1} - \mu_{2} < \triangle_{l} \\
+    H_{1}: \triangle_{l} \le \mu_{1} - \mu_{2}
+\end{gather}
+とする。帰無仮説を棄却するとき、許容できる程度の劣化しかなかったと言える。
+
+Welchのt検定を用いることができ、検定統計量は
+\begin{equation}
+    T_{l} = \frac{\bar{X}_{1} - \bar{X}_{2} - \triangle_{l}}{\sqrt{\frac{s_{1}^{2}}{n_{1}} + \frac{s_{2}^{2}}{n_{2}}}}
+\end{equation}
+である。棄却域は$T > t_{\alpha}(\nu)$である。
+
+同等性検定のうち、lower equivalence boundに対する検定のみを行うと思えば良い。
+
+\subsection{サンプルサイズの設計}
+
+同等性検定における$\triangle_{l}$の時の計算式と同じである。

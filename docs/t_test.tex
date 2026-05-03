@@ -1,0 +1,156 @@
+\section{Welchのt検定}
+
+\subsection{どのような検定か}
+
+Welchのt検定は、ABテストにおいて、A群とB群の間でユーザー当たりの平均CV数に有意な差があるかを判定する場合に用いることができる。確率変数$X_{1,i}\ (i=1,\ldots,n_{1}) \sim N(\mu_{1}, \sigma_{1}^{2})$の母平均$\mu_{1}$と、$X_{2, i}\ (i=1,\ldots,n_{2}) \sim N(\mu_{2}, \sigma_{2}^{2})$の母平均$\mu_{2}$が異なるかを判断するための検定である。ここで、$n_{1},n_{2}$は各群のサンプルサイズであり、$n_{2}=rn_{1}$とする。
+また、$\mathbb{E}[X_{1,i}]=\mu_{1}, \text{Var}[X_{1,i}]=\sigma_{1}^{2}, \mathbb{E}[X_{2,i}]=\mu_{2}, \text{Var}[X_{2,i}]=\sigma_{2}^{2}$である。
+
+Welchのt検定における検定統計量は次の通りである。
+\begin{equation}
+    T = \frac{\bar{X}_1 - \bar{X}_2}{\sqrt{\frac{s_{1}^{2}}{n_{1}} + \frac{s_{2}^{2}}{n_{2}}}}
+\end{equation}
+ここで、
+\begin{align}
+    \bar{X_{1}} & = \frac{1}{n} \sum_{i = 1}^{n} X_{1, i}                         \\
+    \bar{X_{2}} & = \frac{1}{n} \sum_{i = 1}^{n} X_{2, i}                         \\
+    s_{1}^{2}   & = \frac{1}{n - 1} \sum_{i = 1}^{n} (X_{1, i} - \bar{X}_{1})^{2} \\
+    s_{2}^{2}   & = \frac{1}{n - 1} \sum_{i = 1}^{n} (X_{2, i} - \bar{X}_{2})^{2}
+\end{align}
+である。対立仮説に対する棄却域とp値の計算方法は表\ref{sec2:tab:rejection_region}の通りである。$t$はt分布に従う確率変数であり、$t_{\alpha}(\nu)$は自由度$\nu$のt分布において上側100$\alpha$\%を満たす点である。
+
+\begin{table*}[h]
+    \centering
+    \caption{t検定における対立仮説と棄却域、p値の計算方法}
+    \label{sec2:tab:rejection_region}
+    \begin{center}
+        \renewcommand{\arraystretch}{0.9} % 行の高さ調整
+        \setlength{\tabcolsep}{8pt}      % 列の幅調整
+        \scalebox{1.0}{
+            \begin{tabular}{|c|c|c|}
+                \hline
+                対立仮説                   & 棄却域                       & p値の計算方法       \\
+                \hline
+                $\mu_{1} \neq \mu_{2}$ & $|T| > t_{\alpha/2}(\nu)$ & $2P(t > |T|)$ \\
+                $\mu_{1} > \mu_{2}$    & $T > t_{\alpha}(\nu)$     & $P(t > T)$    \\
+                $\mu_{1} < \mu_{2}$    & $T < -t_{\alpha}(\nu)$    & $P(t < T)$    \\
+                \hline
+            \end{tabular}
+        }
+    \end{center}
+\end{table*}
+
+\subsection{サンプルサイズの設計}
+
+\subsubsection{両側検定の場合}
+
+対立仮説を$\mu_{1} \neq \mu_{2}$としたときのサンプルサイズ設計に用いる計算式を導出する。対立仮説が成り立つとした時、
+\begin{equation}
+    1 - \beta = P(|T| > t_{\alpha/2}) = P(T > t_{\alpha/2}) + P(T < -t_{\alpha/2}) \label{sec2:eq:stat_power}
+\end{equation}
+である。ここで、$\mu_{1} > \mu_{2}$とする。この時、式\eqref{sec2:eq:stat_power}の第二項は十分小さいとして無視する。また、サンプルサイズが大きい時に検定統計量は標準正規分布に従う確率変数に分布収束することを利用し、以下のように整理する。
+\begin{align}
+    1 - \beta & = P(T > z_{\alpha/2})                                                                                                                                                                                                                \\
+              & = P\left(\frac{\bar{X}_{1} - \bar{X}_{2}}{\sqrt{\frac{s_{1}^{2}}{n_{1}} + \frac{s_{2}^{2}}{n_{2}}}} > z_{\alpha/2}\right)                                                                                                            \\
+              & = P\left(\frac{\bar{X}_{1} - \bar{X}_{2} - (\mu_{1} - \mu_{2})}{\sqrt{\frac{s_{1}^{2}}{n_{1}} + \frac{s_{2}^{2}}{n_{2}}}} > z_{\alpha/2} - \frac{\mu_{1} - \mu_{2}}{\sqrt{\frac{s_{1}^{2}}{n_{1}} + \frac{s_{2}^{2}}{n_{2}}}}\right)
+\end{align}
+これより、
+\begin{align}
+    -z_{\beta} = z_{\alpha/2} - \frac{\mu_{1} - \mu_{2}}{\sqrt{\frac{s_{1}^{2}}{n_{1}} + \frac{s_{2}^{2}}{n_{2}}}}
+\end{align}
+が成り立つ。$n_{2} = rn_{1}$を利用して$n_{1}$について解くことで、サンプルサイズの計算式を得る。
+\begin{equation}
+    n_{1} = \frac{(z_{\alpha/2} + z_{\beta})^{2} \left(s_{1}^{2} + \frac{s_{2}^{2}}{r}\right)}{(\mu_{1} - \mu_{2})^{2}}
+\end{equation}
+
+\subsubsection{片側検定の場合}
+両側検定の場合の計算式において、$z_{\alpha/2}$に$z_{\alpha}$を代入すれば良い。
+
+\subsection{正規分布に従っていないデータに対する適用}
+
+ABテストにおいて、サンプルサイズが多い場合はデータの性質によらず、Welchのt検定を用いて良いかを検討する。
+
+$X_{1, 1}, \ldots, X_{1, n}$が群1、$X_{2, 1}, \ldots, X_{2, n}$が群2のサンプルであり、それぞれ群内で独立に同一分布に従うとする。また、群1と群2は独立であるとする。$\mathbb{E}[X_{1, i}] = \mu_1, \text{Var}[X_{1, i}] = \sigma^2_1, \mathbb{E}[X_{2, i}] = \mu_2, \text{Var}[X_{2, i}] = \sigma^2_2$とする($\sigma_{1}^{2}, \sigma_{2}^{2} \in (0, \infty)$)。
+
+Welchのt検定における検定統計量は
+\begin{equation}
+    t = \frac{\bar{X}_1 - \bar{X}_2 - (\mu_1 - \mu_2)}{\sqrt{\frac{s_{1}^{2} + s_{2}^{2}}{n}}}
+\end{equation}
+である（帰無仮説が真であることは仮定しない）。ここで、
+\begin{align}
+    \bar{X_{1}} & = \frac{1}{n} \sum_{i = 1}^{n} X_{1, i}                         \\
+    \bar{X_{2}} & = \frac{1}{n} \sum_{i = 1}^{n} X_{2, i}                         \\
+    s_{1}^{2}   & = \frac{1}{n - 1} \sum_{i = 1}^{n} (X_{1, i} - \bar{X}_{1})^{2} \\
+    s_{2}^{2}   & = \frac{1}{n - 1} \sum_{i = 1}^{n} (X_{2, i} - \bar{X}_{2})^{2}
+\end{align}
+である。また、
+\begin{align}
+    U_{n} & = \frac{\bar{X}_1 - \bar{X}_2 - (\mu_1 - \mu_2)}{\sqrt{\frac{\sigma_{1}^{2} + \sigma_{2}^{2}}{n}}} \\
+    R_{n} & = \sqrt{\frac{s_{1}^{2} + s_{2}^{2}}{\sigma_{1}^{2} + \sigma_{2}^{2}}}
+\end{align}
+とする。
+
+$U_{n}$の分子は、
+\begin{equation}
+    \bar{X}_1 - \bar{X}_2 - (\mu_1 - \mu_2) = \frac{1}{n} \sum_{i = 1}^{n} ((X_{1, i} - \mu_{1}) - (X_{2, i} - \mu_{2}))
+\end{equation}
+と整理できる。ここで、$W_{i} = (X_{1, i} - \mu_{1}) - (X_{2, i} - \mu_{2})$とおく。群1内のi.i.d.性、群2内のi.i.d.性、および群間独立性より、$W_{1}, \ldots, W_{n}$もi.i.d.である。$W_{i}$の期待値と分散はそれぞれ次のようになる。
+\begin{align}
+    \mathbb{E}[W_{i}] & = \mathbb{E}[(X_{1, i} - \mu_{1}) - (X_{2, i} - \mu_{2})]         \\
+                      & = \mathbb{E}[X_{1, i}] - \mu_{1} - \mathbb{E}[X_{2, i}] + \mu_{2} \\
+                      & = 0
+\end{align}
+$X_{1, i}$と$X_{2, i}$の独立性より、
+\begin{align}
+    \text{Var}[W_{i}] & = \text{Var}[(X_{1, i} - \mu_{1}) - (X_{2, i} - \mu_{2})] \\
+                      & = \text{Var}[X_{1, i}] + \text{Var}[X_{2, i}]             \\
+                      & = \sigma_{1}^{2} + \sigma_{2}^{2}
+\end{align}
+これは正の有限値である。中心極限定理より、
+\begin{equation}
+    U_{n} = \frac{\bar{W}}{\sqrt{\frac{\sigma_{1}^{2} + \sigma_{2}^{2}}{n}}} = \frac{\sqrt{n}(\bar{W} - 0)}{\sqrt{\sigma_{1}^{2} + \sigma_{2}^{2}}} \xrightarrow{d} Z \sim \mathcal{N}(0, 1)
+\end{equation}
+となる。
+
+一方、$R_{n}$について、$s_{1}^{2} \xrightarrow{p} \sigma_{1}^{2}, s_{2}^{2} \xrightarrow{p} \sigma_{2}^{2}$が成り立つことを示す。$k = 1, 2$について、
+\begin{align}
+    \sum_{i = 1}^{n} (X_{k, i} - \bar{X}_{k})^{2}
+     & = \sum_{i = 1}^{n} ((X_{k, i} - \mu_{k}) - (\bar{X}_{k} - \mu_{k}))^{2}                                                                     \\
+     & = \sum_{i = 1}^{n} (X_{k, i} - \mu_{k})^{2} - 2(\bar{X}_{k} - \mu_{k}) \sum_{i = 1}^{n} (X_{k, i} - \mu_{k}) + n(\bar{X}_{k} - \mu_{k})^{2}
+\end{align}
+となる。ここで、$\sum_{i = 1}^{n} (X_{k, i} - \mu_{k}) = n(\bar{X}_{k} - \mu_{k})$より、
+\begin{align}
+    \sum_{i = 1}^{n} (X_{k, i} - \bar{X}_{k})^{2}
+     & = \sum_{i = 1}^{n} (X_{k, i} - \mu_{k})^{2} - 2n(\bar{X}_{k} - \mu_{k})^{2} + n(\bar{X}_{k} - \mu_{k})^{2} \\
+     & = \sum_{i = 1}^{n} (X_{k, i} - \mu_{k})^{2} - n(\bar{X}_{k} - \mu_{k})^{2}
+\end{align}
+となる。よって、
+\begin{equation}
+    s_{k}^{2} = \frac{n}{n - 1} \left(\frac{1}{n} \sum_{i = 1}^{n} (X_{k, i} - \mu_{k})^{2} - (\bar{X}_{k} - \mu_{k})^{2}\right)
+\end{equation}
+と整理できる。
+
+大数の弱法則より$(\bar{X}_{k} - \mu_{k}) \xrightarrow{p} 0$であり、連続写像定理から$(\bar{X}_{k} - \mu_{k})^{2} \xrightarrow{p} 0$である。また、
+\begin{equation}
+    \mathbb{E}\left[\frac{1}{n} \sum_{i = 1}^{n} (X_{k, i} - \mu_{k})^{2}\right] = \mathbb{E}[(X_{k} - \mu_{k})^{2}] = \text{Var}[X_{k}] = \sigma_{k}^{2}
+\end{equation}
+となるから、大数の弱法則より$\frac{1}{n} \sum_{i = 1}^{n} (X_{k, i} - \mu_{k})^{2} \xrightarrow{p} \sigma_{k}^{2}$である。
+
+また、$n \to \infty$のとき$\frac{n}{n - 1} \to 1$であるから、連続写像定理より、
+\begin{equation}
+    s_{k}^{2} = \frac{n}{n - 1} \left(\frac{1}{n} \sum_{i = 1}^{n} (X_{k, i} - \mu_{k})^{2} - (\bar{X}_{k} - \mu_{k})^{2}\right) \xrightarrow{p} \sigma_{k}^{2}
+\end{equation}
+である。
+
+ここで、「統計学への確率論、その先へ」の定理4.3.1より、$(s_{1}^{2}, s_{2}^{2}) \xrightarrow{p} (\sigma_{1}^{2}, \sigma_{2}^{2})$が成り立つ。再び連続写像定理より
+\begin{equation}
+    R_{n} = \sqrt{\frac{s_{1}^{2} + s_{2}^{2}}{\sigma_{1}^{2} + \sigma_{2}^{2}}} \xrightarrow{p} \sqrt{\frac{\sigma_{1}^{2} + \sigma_{2}^{2}}{\sigma_{1}^{2} + \sigma_{2}^{2}}} = 1
+\end{equation}
+となる。
+
+スラツキーの定理を用いて
+\begin{equation}
+    t = \frac{U_{n}}{R_{n}} \xrightarrow{d} Z
+\end{equation}
+となる。
+
+これで、元のデータが正規分布に従っていなかったとしても、サンプルサイズが十分大きいのであれば、検定統計量は標準正規分布に従う確率変数に分布収束するとわかった。そのため、棄却域を与えるパーセント点は標準正規分布から与えれば良い。また、サンプルサイズが十分大きいのであれば、Welch-Satterthwaiteの自由度も大きくなり、t分布は標準正規分布で近似できる。これより、データが正規分布に従っていないがサンプルサイズが大きい時、特別に標準正規分布からパーセント点を求めずとも、t分布から求めたパーセント点を用いれば良い。すなわち、Welchのt検定をそのまま用いることができる。

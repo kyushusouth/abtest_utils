@@ -1,0 +1,61 @@
+\section{ポアソン分布の差の検定}
+
+\subsection{どのような検定か}
+ある事象の発生回数がポアソン分布に従うとし、各群で独立に同一の分布に従う確率変数を$X_{1, i} \sim \text{Po}(\lambda_{1})\ (i = 1, \ldots, n_{1}),\ X_{2, i} \sim \text{Po}(\lambda_{2})\ (i = 1, \ldots, n_{2})$とする。このようなデータとして、例えばユーザーあたりのCV数が考えられる。
+\begin{equation}
+    \hat{\lambda}_{1} = \frac{1}{n_{1}} \sum_{i = 1}^{n_{1}} X_{1, i},\ \hat{\lambda}_{2} = \frac{1}{n_{2}} \sum_{i = 1}^{n_{2}} X_{2, i}
+\end{equation}
+とすると、$\mathbb{E}[X_{k, i}] = \lambda_{k},\ \text{Var}[X_{k, i}] = \lambda_{k}$より、
+\begin{align}
+    \mathbb{E}[\hat{\lambda}_{k}] = \lambda_{k},\ \text{Var}[\hat{\lambda}_{k}] = \frac{\lambda_{k}}{n_{k}}
+\end{align}
+となる。サンプルサイズが十分大きい場合、中心極限定理より$\hat{\lambda_{k}} \sim N(\lambda_{k}, \frac{\lambda_{k}}{n_{k}})$が成り立ち、正規分布の再生性より$\hat{\lambda_{1}} - \hat{\lambda_{2}} \sim N(\lambda_{1} - \lambda_{2}, \frac{\lambda_{1}}{n_{1}} + \frac{\lambda_{2}}{n_{2}})$となる。
+
+以上のことから、帰無仮説$H_{0}$を$\lambda_{1} = \lambda_{2}$とする仮説検定において、検定統計量は
+\begin{equation}
+    Z = \frac{\hat{\lambda_{1}} - \hat{\lambda_{2}}}{\sqrt{\frac{\hat{\lambda_{1}}}{n_{1}} + \frac{\hat{\lambda_{2}}}{n_{2}}}}
+\end{equation}
+となる。対立仮説に対する棄却域とp値の計算方法は表\ref{sec3:tab:rejection_region}の通りである。$z$は正規分布に従う確率変数であり、$z_{\alpha}$は上側100$\alpha$\%を満たす点である。
+
+\begin{table*}[h]
+    \centering
+    \caption{ポアソン分布の差の検定における対立仮説と棄却域、p値の計算方法}
+    \label{sec3:tab:rejection_region}
+    \begin{center}
+        \renewcommand{\arraystretch}{0.9} % 行の高さ調整
+        \setlength{\tabcolsep}{8pt}      % 列の幅調整
+        \scalebox{1.0}{
+            \begin{tabular}{|c|c|c|}
+                \hline
+                対立仮説                           & 棄却域                  & p値の計算方法       \\
+                \hline
+                $\lambda_{1} \neq \lambda_{2}$ & $|Z| > z_{\alpha/2}$ & $2P(z > |Z|)$ \\
+                $\lambda_{1} > \lambda_{2}$    & $Z > z_{\alpha}$     & $P(z > Z)$    \\
+                $\lambda_{1} < \lambda_{2}$    & $Z < -z_{\alpha}$    & $P(z < Z)$    \\
+                \hline
+            \end{tabular}
+        }
+    \end{center}
+\end{table*}
+
+\subsection{サンプルサイズの設計}
+
+\subsubsection{両側検定}
+
+対立仮説を$\lambda_{1} \neq \lambda_{2}$としたときのサンプルサイズ計算に用いる計算式を導出する。そのほかの検定と同様にして、
+\begin{align}
+    1 - \beta & = P(Z > z_{\alpha/2})                                                                                                                                                                                                                                                \\
+              & = P\left(\frac{\hat{\lambda_{1}} - \hat{\lambda_{2}}}{\sqrt{\frac{\hat{\lambda_{1}}}{n_{1}} + \frac{\hat{\lambda_{2}}}{n_{2}}}} > z_{\alpha/2}\right)                                                                                                                \\
+              & = P\left(\frac{\hat{\lambda_{1}} - \hat{\lambda_{2}} - (\mu_{1} - \mu_{2})}{\sqrt{\frac{\hat{\lambda_{1}}}{n_{1}} + \frac{\hat{\lambda_{2}}}{n_{2}}}} > z_{\alpha/2} - \frac{\mu_{1} - \mu_{2}}{\sqrt{\frac{\lambda_{1}}{n_{1}} + \frac{\lambda_{2}}{n_{2}}}}\right)
+\end{align}
+これより、
+\begin{equation}
+    -z_{\beta} = z_{\alpha/2} - \frac{\mu_{1} - \mu_{2}}{\sqrt{\frac{\lambda_{1}}{n_{1}} + \frac{\lambda_{2}}{n_{2}}}}
+\end{equation}
+が成り立つ。これを$n_{1}$について解くことで、サンプルサイズの計算式を得る。
+\begin{equation}
+    n_{1} = \frac{(z_{\alpha/2} + z_{\beta})^{2}\left(\lambda_{1} + \frac{\lambda_{2}}{r}\right)}{(\mu_{1} - \mu_{2})^{2}}
+\end{equation}
+
+\subsubsection{片側検定}
+両側検定の計算式における$z_{\alpha/2}$に$z_{\alpha}$を代入すれば良い。

@@ -1,0 +1,145 @@
+\section{その他}
+
+\subsection{多重比較の補正}
+
+\begin{theorem}
+    Bonferroni法は、FWERを$\alpha$以下にできる。
+\end{theorem}
+\begin{proof}
+    多重比較におけるファミリーを$\mathcal{F} = \{H_{0, i}\}_{i = 1}^{N}$とする。ここで、$H_{0, i}$は帰無仮説である。ここで、
+    \begin{equation}
+        \mathcal{I} = \{i \mid i \in \{1, \ldots, N\}, H_{0, i}は真である\}
+    \end{equation}
+    とし、$n_{0} = |\mathcal{I}|$とする。また、$V_{i}$を$H_{i}$が棄却される事象、すなわち$p_{i} \le \alpha / n$が成り立つ事象とする。
+    \begin{equation}
+        \text{FWER} = P\left(\bigcup_{i \in \mathcal{I}} V_{i}\right) \le \sum_{i \in \mathcal{I}} P(V_{i}) \le \sum_{i \in \mathcal{I}} \frac{\alpha}{n} = n_{0} \frac{\alpha}{n} \le \alpha
+    \end{equation}
+    ここで、$P(V_{i}) = \alpha / n$であるが、あえて以下と書いてもいいことを使った。
+\end{proof}
+
+\begin{theorem}
+    Holm-Bonferroni法は、FWERを$\alpha$以下にできる。
+\end{theorem}
+\begin{proof}
+    多重比較におけるファミリーを$\mathcal{F} = \{H_{0, i}\}_{i = 1}^{N}$とする。ここで、$H_{0, i}$は帰無仮説である。ここで、
+    \begin{equation}
+        \mathcal{I} = \{i \mid i \in \{1, \ldots, N\}, H_{0, i}は真である\}
+    \end{equation}
+    とし、$n_{0} = |\mathcal{I}|$とする。仮説検定の結果得られた$p$値を$\{p_{i}\}_{i = 1}^{N}$として、$p$値を小さい順に並び替えた数列を$\{p_{(i)}\}_{i = 1}^{N}$、これに対応するように並び替えたファミリーを$\{H_{0, (i)}\}_{i = 1}^{N}$とする。また、$i_{0} = \argmin_{i \in \mathcal{I}} p_{i}$とすると、
+    \begin{equation}
+        \label{eq1}
+        i_{0} \le n - n_{0} + 1 \Leftrightarrow  \frac{1}{n - i_{0} + 1} \le \frac{1}{n_{0}}
+    \end{equation}
+    となる。ここで、$A_{i}$を、「$p_{i} = \min_{j \in \mathcal{I}} p_{j}$かつ真の帰無仮説$H_{0, i}$が誤って棄却される」が成り立つ事象とする。この時、Holm-Bonferroni法の計算方法と式\eqref{eq1}より
+    \begin{equation}
+        P(A_{i}) = \frac{\alpha}{n - i + 1} \le \frac{\alpha}{n_{0}}
+    \end{equation}
+    となる。ここで、$\bigcup_{i \in \mathcal{I}} A_{i}$に対して$\left(\bigcup_{i \in \mathcal{I}} A_{i}\right)^{c} = \bigcap_{i \in \mathcal{I}} A_{i}^{c}$を考える。これは、任意の$i \in \mathcal{I}$に対して$A_{i}^{c}$が成り立つ事象を意味し、$A_{i}^{c}$は$A_{i}$の条件の否定を満たす事象であるから、「$p_{i} \neq \min_{j \in \mathcal{I}} p_{j}$または真の帰無仮説$H_{0, i}$が誤って棄却されない」となる。定義より、ある$i_{0} \in \mathcal{I}$が存在して、$p_{i_{0}} = \min_{j \in \mathcal{I}} p_{j}$が成り立つ。よって、$H_{0, i_{0}}$は棄却されない。Holm-Bonferroni法の計算方法より、この時任意の$i \in \mathcal{I} \setminus \{i_{0}\}$に対して$H_{0, i}$も棄却されない。従って、$\bigcap_{i \in \mathcal{I}} A_{i}^{c}$は帰無仮説が真である場合、その全てが棄却されない事象を表している。以上より、$\bigcup_{i \in \mathcal{I}} A_{i}$は少なくとも一つの真の帰無仮説が棄却される事象を意味するから、
+    \begin{equation}
+        \text{FWER} = P\left(\bigcup_{i \in \mathcal{I}} A_{i}\right) \le \sum_{i \in \mathcal{I}} P(A_{i}) \le \sum_{i \in \mathcal{I}} \frac{\alpha}{n_{0}} = \alpha
+    \end{equation}
+\end{proof}
+
+% \subsection{有限母集団からの非復元抽出}
+% 大きさ$N$の有限母集団を考え、各個体の特性値を$a_{1}, \ldots, a_{N}$とする。また、$X_{i}, i = 1, \ldots, n$を標本として抽出された観測値とする。非復元無作為抽出とは、任意の互いに異なる$i_{1}, \ldots, i_{n}$について
+% \begin{equation}
+%     P(X_{1} = a_{i_{1}}, \ldots, X_{n} = a_{i_{n}}) = \frac{1}{N(N - 1) \cdots (N - n + 1)}
+% \end{equation}
+% となるような標本抽出の方法である。
+
+% また、無作為非復元抽出では上記のように$X_{1}, \ldots, X_{n}$を1個ずつ順に抜き出すと考えず、n個の個体を一度に抜き出すと考えることもでき、
+% \begin{equation}
+%     P(\{X_{1}, \ldots, X_{n}\} = \{a_{i_{1}}, \ldots, a_{i_{n}}\}) = 1 / \binom{N}{n}
+% \end{equation}
+% となる。
+
+% ここで、このように一度に取り出した標本から、あらためて1個ずつ無作為に抜き出せば、母集団から1個ずつ順に抽出した時と同じ状況となる。特にi番目の観測値$X_{i}$の周辺分布は$X_{1}$の周辺分布と同じであり、$(X_{i}, X_{j})$の2次元の同時分布は$(X_{1}, X_{2})$の同時分布と同じである。これらを示す。
+
+% まず、任意の$k \in \{i_{s}\}_{s = 1}^{n}$に対し、$X_{1} = a_{k}$となる確率は
+% \begin{align}
+%     P(X_{1} = a_{k})
+%      & = \frac{{}_{N - 1} P_{n - 1}}{{}_{N} P_{n}}             \\
+%      & = \frac{(N - 1)! / ((N - 1) - (n - 1))!}{N! / (N - n)!} \\
+%      & = \frac{(N - 1)! / (N - n)!}{N! / (N - n)!}             \\
+%      & = \frac{(N - 1)!}{N!}                                   \\
+%      & = \frac{1}{N}
+% \end{align}
+% となるが、これは任意の$i = 1, \ldots, n$についても同様だから、$X_{i}$の周辺分布は$X_{1}$の周辺分布と同じである。
+
+% 次に、任意の$k, l \in \{i_{s}\}_{s = 1}^{n}\ (k \neq l)$に対し、$X_{1} = a_{k}, X_{2} = a_{l}$となる確率は
+% \begin{align}
+%     P(X_{1} = a_{k}, X_{2} = a_{l})
+%      & = \frac{{}_{N - 2} P_{n - 2}}{{}_{N} P_{n}}             \\
+%      & = \frac{(N - 2)! / ((N - 2) - (n - 2))!}{N! / (N - n)!} \\
+%      & = \frac{(N - 2)! / (N - n)!}{N! / (N - n)!}             \\
+%      & = \frac{(N - 2)!}{N!}                                   \\
+%      & = \frac{1}{N(N - 1)}
+% \end{align}
+% となるが、これは任意の$i, j \in \{1, \ldots, n\}\ (i \neq j)$についても同様だから、$X_{i}, X_{j}$の同時分布は$X_{1}, X_{2}$の同時分布と同じである。
+
+% ここで、有限母集団の母平均$\mu$と母分散$\sigma^{2}$を次のように定義する。
+% \begin{gather}
+%     \mu = \frac{1}{N} \sum_{i = 1}^{N} a_{i} \\
+%     \sigma^{2} = \frac{1}{N} \sum_{i = 1}^{N} (a_{i} - \mu)^{2}
+% \end{gather}
+% 標本平均$\bar{X} = \frac{1}{n} \sum_{i = 1}^{n} X_{i}$の期待値と分散を評価する。まず、期待値は
+% \begin{align}
+%     E[\bar{X}]
+%      & = E\left[\frac{1}{n} \sum_{i = 1}^{n} X_{i}\right] \\
+%      & = \frac{1}{n} \sum_{i = 1}^{n} E\left[X_{i}\right] \\
+%      & = \frac{1}{n} \cdot n\mu                           \\
+%      & = \mu
+% \end{align}
+% となる。次に分散は、
+% \begin{align}
+%     \text{Var}[\bar{X}]
+%      & = \text{Var}\left[\frac{1}{n} \sum_{i = 1}^{n} X_{i}\right]                                                   \\
+%      & = \sum_{i = 1}^{n} \frac{1}{n^{2}} \text{Var}[X_{i}] + 2\sum_{i < j} \frac{1}{n^{2}} \text{Cov}[X_{i}, X_{j}] \\
+%      & = \frac{1}{n^{2}} \left(\sum_{i = 1}^{n} \text{Var}[X_{i}] + 2\sum_{i < j} \text{Cov}[X_{i}, X_{j}]\right)    \\
+%      & = \frac{1}{n^{2}} \left(\sum_{i = 1}^{n} \text{Var}[X_{i}] + \sum_{i \neq j} \text{Cov}[X_{i}, X_{j}]\right)  \\
+%      & = \frac{1}{n^{2}} \left(n\text{Var}[X_{1}] + n(n - 1)\text{Cov}[X_{1}, X_{2}]\right)
+% \end{align}
+% となる。$X_{i}$と$X_{1}$、$X_{i}, X_{j}$と$X_{1}, X_{2}$の周辺分布が同じことを利用し、分散および共分散をまとめた。
+
+% ここで、
+% \begin{align}
+%     \sum_{i = 1}^{N} (a_{i} - \bar{a})^{2}
+%      & = \sum_{i = 1}^{N} (a_{i}^{2} - 2a_{i}\bar{a} + \bar{a}^{2})                      \\
+%      & = \sum_{i = 1}^{N} a_{i}^{2} - 2\bar{a} \sum_{i = 1}^{N}a_{i} + N\bar{a}^{2}      \\
+%      & = \sum_{i = 1}^{N}a_{i}^{2} - 2\bar{a}N\bar{a} + N\bar{a}^{2}                     \\
+%      & = \sum_{i = 1}^{N}a_{i}^{2} - 2N\bar{a}^{2} + N\bar{a}^{2}                        \\
+%      & = \sum_{i = 1}^{N}a_{i}^{2} - N\bar{a}^{2}                                        \\
+%      & = \sum_{i = 1}^{N}a_{i}^{2} - N\left(\frac{1}{N} \sum_{i = 1}^{N}a_{i}\right)^{2} \\
+%      & = \sum_{i = 1}^{N}a_{i}^{2} - \frac{1}{N} \left(\sum_{i = 1}^{N}a_{i}\right)^{2}
+% \end{align}
+% 及び任意の$i \neq j$について$P(X_{1} = a_{i}, X_{2} = a_{j}) = 1 / N(N - 1)$であることに注意すると、$\text{Cov}[X_{1}, X_{2}]$は
+% \begin{align}
+%     \text{Cov}[X_{1}, X_{2}]
+%      & = E[X_{1}X_{2}] - E[X_{1}]E[X_{2}]                                                                                                                               \\
+%      & = \sum_{i \neq j}P(X_{1} = a_{i}, X_{2} = a_{j})a_{i}a_{j} - \left(\frac{1}{N}\sum_{i = 1}^{N}a_{i}\right)^{2}                                                   \\
+%      & = \frac{1}{N(N - 1)} \sum_{i \neq j}a_{i}a_{j} - \left(\frac{1}{N}\sum_{i = 1}^{N}a_{i}\right)^{2}                                                               \\
+%      & = \frac{1}{N(N - 1)}\left(\left(\sum_{i = 1}^{N} a_{i}\right)^{2} - \sum_{i = 1}^{N}a_{i}^{2}\right) - \left(\frac{1}{N}\sum_{i = 1}^{N}a_{i}\right)^{2}         \\
+%      & = \frac{1}{N(N - 1)}\left(\sum_{i = 1}^{N}a_{i}\right)^{2} - \frac{1}{N(N - 1)}\sum_{i = 1}^{N}a_{i}^{2} - \frac{1}{N^{2}}\left(\sum_{i = 1}^{N}a_{i}\right)^{2} \\
+%      & = \left(\frac{1}{N(N - 1)} - \frac{1}{N^{2}}\right)\left(\sum_{i = 1}^{N}a_{i}\right)^{2} - \frac{1}{N(N - 1)}\sum_{i = 1}^{N}a_{i}^{2}                          \\
+%      & = \frac{N - (N - 1)}{N^{2}(N - 1)}\left(\sum_{i = 1}^{N}a_{i}\right)^{2} - \frac{1}{N(N - 1)}\sum_{i = 1}^{N}a_{i}^{2}                                           \\
+%      & = \frac{1}{N^{2}(N - 1)}\left(\sum_{i = 1}^{N}a_{i}\right)^{2} - \frac{1}{N(N - 1)}\sum_{i = 1}^{N}a_{i}^{2}                                                     \\
+%      & = -\frac{1}{N(N - 1)}\left(\sum_{i= 1}^{N}a_{i}^{2} - \frac{1}{N}\left(\sum_{i = 1}^{N}a_{i}\right)^{2}\right)                                                   \\
+%      & = -\frac{1}{N(N - 1)}\sum_{i = 1}^{N}(a_{i} - \bar{a})^{2}                                                                                                       \\
+%      & = -\frac{\sigma^{2}}{N - 1}
+% \end{align}
+% となる。従って$\text{Var}[\bar{X}]$は
+% \begin{align}
+%     \text{Var}[\bar{X}]
+%      & = \frac{1}{n^{2}} \left(n\text{Var}[X_{1}] + n(n - 1)\text{Cov}[X_{1}, X_{2}]\right)        \\
+%      & = \frac{1}{n^{2}} \left(n\sigma^{2} + n(n - 1)\left(-\frac{\sigma^{2}}{N - 1}\right)\right) \\
+%      & = \frac{\sigma^{2}}{n} - \frac{n - 1}{n(N - 1)}\sigma^{2}                                   \\
+%      & = \frac{\sigma^{2}}{n}\left(1 - \frac{n - 1}{N - 1}\right)                                  \\
+%      & = \frac{\sigma^{2}}{n} \frac{(N - 1) - (n - 1)}{N - 1}                                      \\
+%      & = \frac{\sigma^{2}}{n} \frac{N - n}{N - 1}
+% \end{align}
+% となる。まとめると、
+% \begin{gather}
+%     E[\bar{X}] = \mu \\
+%     \text{Var}[\bar{X}] = \frac{N - n}{N - 1}\frac{\sigma^{2}}{n}
+% \end{gather}
+% である。
