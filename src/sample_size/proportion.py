@@ -42,13 +42,14 @@ def proportion_diff_test_sample_size(
     return math.ceil(nA), math.ceil(nB)
 
 
-pA = 0.02
-pB = pA * 1.06
+if __name__ == "__main__":
+    pA = 0.02
+    pB = pA * 1.06
 
-# 両側検定の場合
-nA, nB = proportion_diff_test_sample_size(pA, pB, "two-sided")
-print(f"両側検定に必要なサンプルサイズ: A群={nA}, B群={nB}")
+    # 両側検定の場合
+    nA, nB = proportion_diff_test_sample_size(pA, pB, "two-sided")
+    print(f"両側検定に必要なサンプルサイズ: A群={nA}, B群={nB}")
 
-# 片側検定の場合
-nA, nB = proportion_diff_test_sample_size(pA, pB, "one-sided")
-print(f"片側検定に必要なサンプルサイズ: A群={nA}, B群={nB}")
+    # 片側検定の場合
+    nA, nB = proportion_diff_test_sample_size(pA, pB, "one-sided")
+    print(f"片側検定に必要なサンプルサイズ: A群={nA}, B群={nB}")

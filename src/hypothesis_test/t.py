@@ -45,21 +45,22 @@ def welch_t_test(
     return delta, p
 
 
-nA = 100000
-mA = 0.1
-vA = 0.1
-nB = 100000
-mB = mA * 1.03
-vB = vA
+if __name__ == "__main__":
+    nA = 100000
+    mA = 0.1
+    vA = 0.1
+    nB = 100000
+    mB = mA * 1.03
+    vB = vA
 
-# 両側検定の場合
-delta, p = welch_t_test(nA, mA, vA, nB, mB, vB, "two-sided")
-print(f"両側検定の場合: delta={delta}, p={p}")
+    # 両側検定の場合
+    delta, p = welch_t_test(nA, mA, vA, nB, mB, vB, "two-sided")
+    print(f"両側検定の場合: delta={delta}, p={p}")
 
-# mA < mBを対立仮説とした片側検定の場合
-delta, p = welch_t_test(nA, mA, vA, nB, mB, vB, "greater")
-print(f"mA < mBを対立仮説とした片側検定の場合: delta={delta}, p={p}")
+    # mA < mBを対立仮説とした片側検定の場合
+    delta, p = welch_t_test(nA, mA, vA, nB, mB, vB, "greater")
+    print(f"mA < mBを対立仮説とした片側検定の場合: delta={delta}, p={p}")
 
-# mA > mBを対立仮説とした片側検定の場合
-delta, p = welch_t_test(nA, mA, vA, nB, mB, vB, "smaller")
-print(f"mA > mBを対立仮説とした片側検定の場合: delta={delta}, p={p}")
+    # mA > mBを対立仮説とした片側検定の場合
+    delta, p = welch_t_test(nA, mA, vA, nB, mB, vB, "smaller")
+    print(f"mA > mBを対立仮説とした片側検定の場合: delta={delta}, p={p}")

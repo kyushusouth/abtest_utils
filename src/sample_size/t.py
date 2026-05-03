@@ -37,20 +37,21 @@ def welch_t_test_sample_size(
     z_beta = NormalDist().inv_cdf(power)
 
     delta = mB - mA
-    nA = (z_alpha * z_beta) ** 2 * (vA + vB / alloc_ratio) / delta**2
+    nA = (z_alpha + z_beta) ** 2 * (vA + vB / alloc_ratio) / delta**2
     nB = nA * alloc_ratio
     return math.ceil(nA), math.ceil(nB)
 
 
-mA = 0.1
-mB = mA * 1.03
-vA = 0.1
-vB = vA
+if __name__ == "__main__":
+    mA = 0.1
+    mB = mA * 1.03
+    vA = 0.1
+    vB = vA
 
-# 両側検定の場合
-nA, nB = welch_t_test_sample_size(mA, mB, vA, vB, "two-sided")
-print(f"両側検定に必要なサンプルサイズ: A群={nA}, B群={nB}")
+    # 両側検定の場合
+    nA, nB = welch_t_test_sample_size(mA, mB, vA, vB, "two-sided")
+    print(f"両側検定に必要なサンプルサイズ: A群={nA}, B群={nB}")
 
-# 片側検定の場合
-nA, nB = welch_t_test_sample_size(mA, mB, vA, vB, "one-sided")
-print(f"片側検定に必要なサンプルサイズ: A群={nA}, B群={nB}")
+    # 片側検定の場合
+    nA, nB = welch_t_test_sample_size(mA, mB, vA, vB, "one-sided")
+    print(f"片側検定に必要なサンプルサイズ: A群={nA}, B群={nB}")

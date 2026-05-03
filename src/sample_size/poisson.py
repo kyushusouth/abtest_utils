@@ -3,7 +3,7 @@ from statistics import NormalDist
 from typing import Literal
 
 
-def poisson_test_sample_size(
+def poisson_diff_test_sample_size(
     lambdaA: float,
     lambdaB: float,
     alternative: Literal["two-sided", "one-sided"],
@@ -40,13 +40,14 @@ def poisson_test_sample_size(
     return math.ceil(nA), math.ceil(nB)
 
 
-lambdaA = 0.5
-lambdaB = lambdaA * 1.02
+if __name__ == "__main__":
+    lambdaA = 0.5
+    lambdaB = lambdaA * 1.02
 
-# 両側検定の場合
-nA, nB = poisson_test_sample_size(lambdaA, lambdaB, "two-sided")
-print(f"両側検定に必要なサンプルサイズ: A群={nA}, B群={nB}")
+    # 両側検定の場合
+    nA, nB = poisson_diff_test_sample_size(lambdaA, lambdaB, "two-sided")
+    print(f"両側検定に必要なサンプルサイズ: A群={nA}, B群={nB}")
 
-# 片側検定の場合
-nA, nB = poisson_test_sample_size(lambdaA, lambdaB, "one-sided")
-print(f"片側検定に必要なサンプルサイズ: A群={nA}, B群={nB}")
+    # 片側検定の場合
+    nA, nB = poisson_diff_test_sample_size(lambdaA, lambdaB, "one-sided")
+    print(f"片側検定に必要なサンプルサイズ: A群={nA}, B群={nB}")

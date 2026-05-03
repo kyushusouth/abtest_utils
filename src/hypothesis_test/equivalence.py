@@ -43,14 +43,15 @@ def welch_t_equivalence_test(
     return p_l, p_u
 
 
-nA = 100000
-mA = 0.1
-vA = 0.1
-nB = 100000
-mB = mA * 1.01
-vB = vA
-delta_l = -(mB - mA) * 0.5
-delta_u = (mB - mA) * 0.5
+if __name__ == "__main__":
+    nA = 100000
+    mA = 0.1
+    vA = 0.1
+    nB = 100000
+    mB = mA * 1.01
+    vB = vA
+    delta_l = -(mB - mA) * 0.5
+    delta_u = (mB - mA) * 0.5
 
-p_l, p_u = welch_t_equivalence_test(nA, mA, vA, nB, mB, vB, delta_l, delta_u)
-print(p_l, p_u)
+    p_l, p_u = welch_t_equivalence_test(nA, mA, vA, nB, mB, vB, delta_l, delta_u)
+    print(p_l, p_u)

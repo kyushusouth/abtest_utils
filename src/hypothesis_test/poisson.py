@@ -11,7 +11,7 @@ def poisson_diff_test(
     cB: int,
     alternative: Literal["two-sided", "greater", "smaller"],
 ):
-    """Wald法によるポアソン分布の差の検定
+    """ポアソン分布の差の検定
 
     Args:
         nA: A群のサンプルサイズ
@@ -39,19 +39,20 @@ def poisson_diff_test(
     return delta, p
 
 
-nA = 100000
-cA = 10000
-nB = 100000
-cB = math.ceil(nB * (cA / nA) * 1.03)
+if __name__ == "__main__":
+    nA = 100000
+    cA = 10000
+    nB = 100000
+    cB = math.ceil(nB * (cA / nA) * 1.03)
 
-# 両側検定の場合
-delta, p = poisson_diff_test(nA, cA, nB, cB, "two-sided")
-print(f"両側検定の場合: delta={delta}, p={p}")
+    # 両側検定の場合
+    delta, p = poisson_diff_test(nA, cA, nB, cB, "two-sided")
+    print(f"両側検定の場合: delta={delta}, p={p}")
 
-# lambdaA < lambdaBを対立仮説とした片側検定の場合
-delta, p = poisson_diff_test(nA, cA, nB, cB, "greater")
-print(f"lambdaA < lambdaBを対立仮説とした片側検定の場合: delta={delta}, p={p}")
+    # lambdaA < lambdaBを対立仮説とした片側検定の場合
+    delta, p = poisson_diff_test(nA, cA, nB, cB, "greater")
+    print(f"lambdaA < lambdaBを対立仮説とした片側検定の場合: delta={delta}, p={p}")
 
-# lambdaA > lambdaBを対立仮説とした片側検定の場合
-delta, p = poisson_diff_test(nA, cA, nB, cB, "smaller")
-print(f"lambdaA > lambdaBを対立仮説とした片側検定の場合: delta={delta}, p={p}")
+    # lambdaA > lambdaBを対立仮説とした片側検定の場合
+    delta, p = poisson_diff_test(nA, cA, nB, cB, "smaller")
+    print(f"lambdaA > lambdaBを対立仮説とした片側検定の場合: delta={delta}, p={p}")

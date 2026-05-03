@@ -46,12 +46,13 @@ def welch_t_equivalence_test_sample_size(
     return math.ceil(nA), math.ceil(nB)
 
 
-mA = 0.1
-mB = mA * 1.009
-vA = 0.1
-vB = vA
-delta_l = -0.001
-delta_u = 0.001
+if __name__ == "__main__":
+    mA = 0.1
+    mB = mA * 1.009
+    vA = 0.1
+    vB = vA
+    delta_l = -0.001
+    delta_u = 0.001
 
-nA, nB = welch_t_equivalence_test_sample_size(mA, mB, vA, vB, delta_l, delta_u)
-print(f"必要なサンプルサイズ: A群={nA}, B群={nB}")
+    nA, nB = welch_t_equivalence_test_sample_size(mA, mB, vA, vB, delta_l, delta_u)
+    print(f"必要なサンプルサイズ: A群={nA}, B群={nB}")
