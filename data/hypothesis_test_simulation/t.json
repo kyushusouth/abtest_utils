@@ -1,0 +1,56 @@
+[
+    {
+        "test_case_name": "正規分布に従うデータに対する両側検定",
+        "distribution": "normal",
+        "alternative": "two-sided",
+        "sample_size_A": 392444,
+        "sample_size_B": 392444,
+        "type_i_error_rate": 0.0494,
+        "empirical_power": 0.8015
+    },
+    {
+        "test_case_name": "正規分布に従うデータに対する片側検定（A<B）",
+        "distribution": "normal",
+        "alternative": "greater",
+        "sample_size_A": 309128,
+        "sample_size_B": 309128,
+        "type_i_error_rate": 0.0518,
+        "empirical_power": 0.8016
+    },
+    {
+        "test_case_name": "正規分布に従うデータに対する片側検定（A>B）",
+        "distribution": "normal",
+        "alternative": "smaller",
+        "sample_size_A": 309128,
+        "sample_size_B": 309128,
+        "type_i_error_rate": 0.0497,
+        "empirical_power": 0.7991
+    },
+    {
+        "test_case_name": "ポアソン分布に従うデータに対する両側検定",
+        "distribution": "poisson",
+        "alternative": "two-sided",
+        "sample_size_A": 392444,
+        "sample_size_B": 392444,
+        "type_i_error_rate": 0.0509,
+        "empirical_power": 0.7915
+    },
+    {
+        "test_case_name": "ポアソン分布に従うデータに対する片側検定（A<B）",
+        "distribution": "poisson",
+        "alternative": "greater",
+        "sample_size_A": 309128,
+        "sample_size_B": 309128,
+        "type_i_error_rate": 0.0485,
+        "empirical_power": 0.7945
+    },
+    {
+        "test_case_name": "ポアソン分布に従うデータに対する片側検定（A>B）",
+        "distribution": "poisson",
+        "alternative": "smaller",
+        "sample_size_A": 309128,
+        "sample_size_B": 309128,
+        "type_i_error_rate": 0.0497,
+        "empirical_power": 0.8095
+    }
+]

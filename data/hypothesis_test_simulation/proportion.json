@@ -1,0 +1,26 @@
+[
+    {
+        "test_case_name": "両側検定",
+        "alternative": "two-sided",
+        "sample_size_A": 356335,
+        "sample_size_B": 356335,
+        "type_i_error_rate": 0.0464,
+        "empirical_power": 0.8083
+    },
+    {
+        "test_case_name": "片側検定（A<B）",
+        "alternative": "greater",
+        "sample_size_A": 280684,
+        "sample_size_B": 280684,
+        "type_i_error_rate": 0.0483,
+        "empirical_power": 0.8082
+    },
+    {
+        "test_case_name": "片側検定（A>B）",
+        "alternative": "smaller",
+        "sample_size_A": 275738,
+        "sample_size_B": 275738,
+        "type_i_error_rate": 0.0475,
+        "empirical_power": 0.8021
+    }
+]

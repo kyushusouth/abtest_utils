@@ -1,0 +1,16 @@
+[
+    {
+        "test_case_name": "対立仮説が真である時に正しく棄却できる割合の確認",
+        "is_allowable": true,
+        "sample_size_A": 4946046,
+        "sample_size_B": 4946046,
+        "empirical_power": 0.8086
+    },
+    {
+        "test_case_name": "帰無仮説が真である時に誤って棄却してしまう割合の確認",
+        "is_allowable": false,
+        "sample_size_A": 4946046,
+        "sample_size_B": 4946046,
+        "type_i_error_rate": 0.0
+    }
+]

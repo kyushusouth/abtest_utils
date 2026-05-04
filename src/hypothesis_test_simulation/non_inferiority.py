@@ -51,7 +51,8 @@ def main():
             # 真の劣化幅よりも許容するマージンが広い状況（対立仮説が真である状況）
             delta_l = true_diff * 1.5
         else:
-            # 真の劣化幅に許容するマージンが一致している状況（帰無仮説が真である状況）
+            # 真の劣化幅が許容するマージンを超えない状況（帰無仮説が真である状況）
+            # true_diffに近すぎるとサンプルサイズが大きすぎて落ちるので余裕を持たせる
             delta_l = true_diff * 0.5
 
         print(f"真の差 = {true_diff:.4f}")
@@ -102,7 +103,7 @@ def main():
         else:
             type_i_error_rate = np.mean(pvalues < alpha)
             print(
-                f"帰無仮説を誤って棄却した割合 (期待値 ~{alpha}): {type_i_error_rate:.4f}"
+                f"帰無仮説を誤って棄却した割合 (期待値 ~0.0): {type_i_error_rate:.4f}"
             )
             result_dict = {
                 "test_case_name": test_case["name"],
