@@ -2,7 +2,8 @@
 
 \subsection{CUPED}
 
-論文の証明の行間を埋める。
+\subsubsection{原論文セクション3.2.2の行間埋め}
+
 \begin{equation}
     \triangle_{cv} = \hat{Y}_{cv}^{(t)} - \hat{Y}_{cv}^{(c)}
 \end{equation}
@@ -99,6 +100,67 @@ SUTVAより、第2項と第3項は0である。第1項と第4項は$(t), (c)$の
     \text{Var}[\triangle_{cv}] = \text{Var}[\triangle](1 - \rho^{2})
 \end{equation}
 を得る。
+
+\subsubsection{サンプルサイズの設計}
+
+CUPEDを用いない場合と用いた場合で、必要なサンプルサイズがどの程度変わるかを考える。ここでは両側検定で考える。
+
+まず、CUPEDを用いない平均値の差の検定におけるサンプルサイズの計算式を導出する。
+\begin{equation}
+    Z = \frac{\bar{Y}^{(t)} - \bar{Y}^{(c)}}{\sqrt{\text{Var}[\bar{Y}^{(t)} - \bar{Y}^{(c)}]}}
+\end{equation}
+が検定統計量である。サンプルサイズが十分大きい場合、中心極限定理より$Z$は帰無仮説が真の時に標準正規分布に従う。対立仮説が真であるとして、次のように整理する。
+\begin{align}
+    1 - \beta & = P(|Z| > z_{\alpha/2})                                                                                                                                                                                                          \\
+              & \simeq P(Z > z_{\alpha / 2})                                                                                                                                                                                                     \\
+              & = P\left(\frac{\bar{Y}^{(t)} - \bar{Y}^{(c)}}{\sqrt{\text{Var}[\bar{Y}^{(t)} - \bar{Y}^{(c)}]}} > z_{\alpha/2}\right)                                                                                                            \\
+              & = P\left(\frac{\bar{Y}^{(t)} - \bar{Y}^{(c)} - (\mu^{(t)} - \mu^{(c)})}{\sqrt{\text{Var}[\bar{Y}^{(t)} - \bar{Y}^{(c)}]}} > z_{\alpha/2} - \frac{\mu^{(t)} - \mu^{(c)}}{\sqrt{\text{Var}[\bar{Y}^{(t)} - \bar{Y}^{(c)}]}}\right) \\
+\end{align}
+ここで、$\mathbb{E}[\bar{Y}^{(t)} - \bar{Y}^{(c)}] = \mu^{(t)} - \mu^{(c)}$とした。ここから
+\begin{equation}
+    -z_{\beta} = z_{\alpha/2} - \frac{\mu^{(t)} - \mu^{(c)}}{\sqrt{\text{Var}[\bar{Y}^{(t)} - \bar{Y}^{(c)}]}}
+\end{equation}
+が得られる。分散を整理すると、
+\begin{equation}
+    \text{Var}[\bar{Y}^{(t)} - \bar{Y}^{(c)}] = \frac{1}{n^{(t)}}\left(\text{Var}[Y^{(t)}] + \frac{1}{r}\text{Var}[Y^{(c)}]\right)
+\end{equation}
+となる。ここで、 $n^{(t)}, n^{(c)}$がそれぞれ介入群、コントロール群のサンプルサイズであり、$n^{(c)} = rn^{(t)}$とした。これを用いて$n^{(t)}$について解くことで、
+\begin{equation}
+    n^{(t)} = \frac{(z_{\alpha_2} + z_{\beta})^{2}\left(\text{Var}[Y^{(t)}] + \frac{1}{r}\text{Var}[Y^{(c)}]\right)}{(\mu^{(t)} - \mu^{(c)})^{2}}
+\end{equation}
+となる。分散は不偏分散で推定する。
+
+次に、CUPEDを用いる場合のサンプルサイズの計算式を導出する。まず、$\triangle_{cv}$が漸近的に正規分布に従うことを示す。
+\begin{align}
+    \hat{Y}_{cv}^{(t)} & = \frac{1}{n^{(t)}}\sum_{i = 1}^{n^{(t)}}(Y_{i}^{(t)} - \theta X_{i}^{(t)}) + \theta \mathbb{E}[X] \\
+    \hat{Y}_{cv}^{(c)} & = \frac{1}{n^{(c)}}\sum_{i = 1}^{n^{(c)}}(Y_{i}^{(c)} - \theta X_{i}^{(c)}) + \theta \mathbb{E}[X] \\
+\end{align}
+であるが、$W_{i} = Y_{i} - \theta X_{i} + \theta \mathbb{E}[X]$とおくことで、
+\begin{equation}
+    \hat{Y}_{cv}^{(t)} = \frac{1}{n^{(t)}} \sum_{i = 1}^{n^{(t)}} W_{i}^{(t)},\quad \hat{Y}_{cv}^{(c)} = \frac{1}{n^{(c)}} \sum_{i = 1}^{n^{(c)}} W_{i}^{(c)}
+\end{equation}
+となる。$W_{i}$は$(X, Y)$の同時分布に対して独立に従う確率変数であるから、中心極限定理と正規分布の再生性から、$\triangle_{cv}$が次のように正規分布に従うことがわかる。
+\begin{equation}
+    \triangle_{cv} = \hat{Y}_{cv}^{(t)} - \hat{Y}_{cv}^{(c)} \sim N\left(\mathbb{E}[W^{(t)}] - \mathbb{E}[W^{(c)}], \frac{1}{n^{(t)}}\text{Var}[W^{(t)}] + \frac{1}{n^{(c)}}\text{Var}[W^{(c)}]\right)
+\end{equation}
+従って
+\begin{equation}
+    Z_{\text{CUPED}} = \frac{\hat{Y}_{cv}^{(t)} - \hat{Y}_{cv}^{(c)}}{\sqrt{\text{Var}[\hat{Y}_{cv}^{(t)} - \hat{Y}_{cv}^{(c)}]}}
+\end{equation}
+が検定統計量となる。対立仮説が真であるとして、CUPEDを用いない場合と同様に整理する。
+\begin{align}
+    1 - \beta & = P(|Z_{\text{CUPED}}| > z_{\alpha/2})                                                                                                                                                                                                                         \\
+              & \simeq P(Z_{\text{CUPED}} > z_{\alpha / 2})                                                                                                                                                                                                                    \\
+              & = P\left(\frac{\hat{Y}_{cv}^{(t)} - \hat{Y}_{cv}^{(c)}}{\sqrt{\text{Var}[\hat{Y}_{cv}^{(t)} - \hat{Y}_{cv}^{(c)}]}} > z_{\alpha/2}\right)                                                                                                                      \\
+              & = P\left(\frac{\hat{Y}_{cv}^{(t)} - \hat{Y}_{cv}^{(c)} - (\mu^{(t)} - \mu^{(c)})}{\sqrt{\text{Var}[\hat{Y}_{cv}^{(t)} - \hat{Y}_{cv}^{(c)}]}} > z_{\alpha/2} - \frac{\mu^{(t)} - \mu^{(c)}}{\sqrt{\text{Var}[\hat{Y}_{cv}^{(t)} - \hat{Y}_{cv}^{(c)}]}}\right) \\
+\end{align}
+ここで、$\mathbb{E}[\hat{Y}_{cv}^{(t)} - \hat{Y}_{cv}^{(c)}] = \mathbb{E}[\bar{Y}^{(t)} - \bar{Y}^{(c)}] = \mu^{(t)} - \mu^{(c)}$であることを用いた。また、$\text{Var}[\hat{Y}_{cv}^{(t)} - \hat{Y}_{cv}^{(c)}] = \text{Var}[\bar{Y}^{(t)} - \bar{Y}^{(c)}](1 - \rho^{2})$であることから、CUPEDを用いない場合と同様に整理することで
+\begin{equation}
+    n^{(t)} = \frac{(z_{\alpha_2} + z_{\beta})^{2}\left(\text{Var}[Y^{(t)}] + \frac{1}{r}\text{Var}[Y^{(c)}]\right)(1 - \rho^{2})}{(\mu^{(t)} - \mu^{(c)})^{2}}
+\end{equation}
+となる。
+
+CUPEDを用いない場合の必要サンプルサイズを$n^{(t)}$、CUPEDを用いる場合の必要サンプルサイズを$n_{cv}^{(t)}$とすれば、$n_{cv}^{(t)} = n^{(t)}(1 - \rho^{2})$が成り立つことがわかる。
 
 % \subsection{有限母集団からの非復元抽出}
 % 大きさ$N$の有限母集団を考え、各個体の特性値を$a_{1}, \ldots, a_{N}$とする。また、$X_{i}, i = 1, \ldots, n$を標本として抽出された観測値とする。非復元無作為抽出とは、任意の互いに異なる$i_{1}, \ldots, i_{n}$について
