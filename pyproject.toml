@@ -5,6 +5,8 @@ description = "ABテストに用いるスクリプト"
 readme = "README.md"
 requires-python = "~=3.13"
 dependencies = [
+    "matplotlib>=3.10.9",
     "scipy>=1.17.1",
+    "seaborn>=0.13.2",
     "tqdm>=4.67.3",
 ]

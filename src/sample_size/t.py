@@ -42,6 +42,42 @@ def welch_t_test_sample_size(
     return math.ceil(nA), math.ceil(nB)
 
 
+def welch_t_test_sample_size_cuped(
+    mA: float,
+    mB: float,
+    vA: float,
+    vB: float,
+    rho: float,
+    alternative: Literal["two-sided", "one-sided"],
+    alpha: float = 0.05,
+    power: float = 0.8,
+    alloc_ratio: float = 1.0,
+) -> tuple[int, int]:
+    """Welchのt検定でCUPEDを用いた場合に必要なサンプルサイズを計算する
+
+    Args:
+        mA: A群の標本平均
+        mB: B群の標本平均
+        vA: A群の不偏分散
+        vB: B群の不偏分散
+        rho: 共変量X,Yの相関係数
+        alpha: 有意水準
+        power: 検出力
+        alloc_ratio: A群とB群のサンプルサイズの比 (`nB / nA`)
+        alternative: 対立仮説
+
+    Returns:
+        nA: A群のサンプルサイズ
+        nB: B群のサンプルサイズ
+    """
+    nA, nB = welch_t_test_sample_size(
+        mA, mB, vA, vB, alternative, alpha, power, alloc_ratio
+    )
+    nA = math.ceil(nA * (1 - rho**2))
+    nB = math.ceil(nB * (1 - rho**2))
+    return nA, nB
+
+
 if __name__ == "__main__":
     mA = 0.1
     mB = mA * 1.03

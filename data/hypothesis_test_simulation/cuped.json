@@ -1,0 +1,29 @@
+[
+    {
+        "test_case_name": "正規分布に従うデータに対する両側検定",
+        "distribution": "normal",
+        "alternative": "two-sided",
+        "type_i_error_rate_default": 0.0484,
+        "type_i_error_rate_cuped": 0.0498,
+        "empirical_power_default": 0.5217,
+        "empirical_power_cuped": 0.8036
+    },
+    {
+        "test_case_name": "正規分布に従うデータに対する片側検定（A<B）",
+        "distribution": "normal",
+        "alternative": "greater",
+        "type_i_error_rate_default": 0.047,
+        "type_i_error_rate_cuped": 0.0479,
+        "empirical_power_default": 0.5486,
+        "empirical_power_cuped": 0.7959
+    },
+    {
+        "test_case_name": "正規分布に従うデータに対する片側検定（A>B）",
+        "distribution": "normal",
+        "alternative": "smaller",
+        "type_i_error_rate_default": 0.0508,
+        "type_i_error_rate_cuped": 0.0497,
+        "empirical_power_default": 0.5569,
+        "empirical_power_cuped": 0.8018
+    }
+]
